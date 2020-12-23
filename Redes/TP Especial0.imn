@@ -1,0 +1,818 @@
+node n3 {
+    type router
+    model router
+    network-config {
+	hostname ISP
+	!
+	interface eth1
+	 ip address 201.8.0.1/24
+	!
+	interface eth0
+	 ip address 201.6.0.2/24
+	!
+	interface eth2
+	 ip address 201.5.0.1/24
+	!
+    }
+    canvas c1
+    iconcoords {686.0 301.0}
+    labelcoords {686.0 333.0}
+    interface-peer {eth2 n4}
+    services {IPForward UserDefined}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth2 201.5.0.1/24', 'ifconfig eth0 201.6.0.2/24', 'ifconfig eth1 201.8.0.1/24', )
+	}
+    }
+    interface-peer {eth0 n16}
+    interface-peer {eth1 n17}
+}
+
+node n4 {
+    type router
+    model router
+    network-config {
+	hostname Ruoter-Nat
+	!
+	interface eth0
+	 ip address 201.5.0.2/24
+	!
+	interface eth1
+	 ip address 192.169.5.235/29
+	!
+    }
+    canvas c1
+    iconcoords {637.0 400.0}
+    labelcoords {637.0 441.0}
+    interface-peer {eth0 n3}
+    interface-peer {eth1 n5}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth1 192.169.5.235/29', 'ifconfig eth0 201.5.0.2/24', )
+	}
+    }
+    services {IPForward UserDefined}
+}
+
+node n5 {
+    type lanswitch
+    network-config {
+	hostname BR
+	!
+    }
+    canvas c1
+    iconcoords {416.0 481.0}
+    labelcoords {416.0 505.0}
+    interface-peer {e0 n4}
+    interface-peer {e1 n6}
+    interface-peer {e2 n7}
+}
+
+node n6 {
+    type router
+    model router
+    network-config {
+	hostname Router-1
+	!
+	interface eth3
+	 ip address 192.169.5.248/30
+	!
+	interface eth0
+	 ip address 192.169.5.233/29
+	!
+	interface eth1
+	 ip address 192.169.5.225/29
+	!
+	interface eth2
+	 ip address 192.169.5.193/27
+	!
+    }
+    canvas c1
+    iconcoords {411.0 347.0}
+    labelcoords {411.0 379.0}
+    interface-peer {eth0 n5}
+    interface-peer {eth1 n9}
+    interface-peer {eth2 n8}
+    interface-peer {eth3 n10}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 192.169.5.233/29', 'ifconfig eth1 192.169.5.225/29', 'ifconfig eth2 192.169.5.193/27', 'ifconfig eth3 192.169.5.248/30', )
+	}
+    }
+    services {IPForward UserDefined}
+}
+
+node n7 {
+    type router
+    model router
+    network-config {
+	hostname Router-3
+	!
+	interface eth1
+	 ip address 192.169.5.241/29
+	!
+	interface eth0
+	 ip address 192.169.5.234/29
+	!
+	interface eth2
+	 ip address 192.169.5.1/25
+	!
+    }
+    canvas c1
+    iconcoords {419.0 619.0}
+    labelcoords {419.0 651.0}
+    interface-peer {eth0 n5}
+    interface-peer {eth1 n11}
+    interface-peer {eth2 n12}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 192.169.5.234/29', 'ifconfig eth1 192.169.5.241/29', 'ifconfig eth2 192.169.5.1/25', )
+	}
+    }
+    services {IPForward UserDefined}
+}
+
+node n8 {
+    type hub
+    network-config {
+	hostname Hub-Oficinas
+	!
+    }
+    canvas c1
+    iconcoords {548.0 235.0}
+    labelcoords {548.0 259.0}
+    interface-peer {e0 n6}
+    interface-peer {e1 n26}
+    interface-peer {e2 n27}
+}
+
+node n9 {
+    type lanswitch
+    network-config {
+	hostname BR-Admin
+	!
+    }
+    canvas c1
+    iconcoords {349.0 238.0}
+    labelcoords {349.0 262.0}
+    interface-peer {e0 n6}
+    interface-peer {e1 n24}
+    interface-peer {e2 n25}
+}
+
+node n10 {
+    type router
+    model router
+    network-config {
+	hostname Router-2
+	!
+	interface eth0
+	 ip address 192.169.5.247/30
+	!
+	interface eth1
+	 ip address 192.169.5.242/29
+	!
+	interface eth2
+	 ip address 192.169.5.130/26
+	!
+    }
+    canvas c1
+    iconcoords {248.0 418.0}
+    labelcoords {248.0 450.0}
+    interface-peer {eth0 n6}
+    interface-peer {eth1 n11}
+    interface-peer {eth2 n14}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 192.169.5.247/30', 'ifconfig eth1 192.169.5.242/29', 'ifconfig eth2 192.169.5.130/26', )
+	}
+    }
+    services {IPForward UserDefined}
+}
+
+node n11 {
+    type lanswitch
+    network-config {
+	hostname BR-DataCenter
+	!
+    }
+    canvas c1
+    iconcoords {253.0 632.0}
+    labelcoords {253.0 656.0}
+    interface-peer {e0 n10}
+    interface-peer {e1 n7}
+    interface-peer {e2 n13}
+}
+
+node n12 {
+    type lanswitch
+    network-config {
+	hostname BR-Ventas
+	!
+    }
+    canvas c1
+    iconcoords {557.0 619.0}
+    labelcoords {557.0 643.0}
+    interface-peer {e0 n7}
+    interface-peer {e1 n1}
+    interface-peer {e2 n2}
+    interface-peer {e3 n23}
+}
+
+node n13 {
+    type router
+    model host
+    network-config {
+	hostname Servidor1
+	!
+	interface eth0
+	 ip address 192.169.5.243/29
+	!
+    }
+    canvas c1
+    iconcoords {88.0 676.0}
+    labelcoords {88.0 708.0}
+    interface-peer {eth0 n11}
+}
+
+node n14 {
+    type router
+    model mdr
+    network-config {
+	hostname Wifi-AP
+	!
+	interface eth0
+	 ip address 192.169.5.131/26
+	!
+	interface eth1
+	 ip address 192.169.5.129/26
+	!
+    }
+    canvas c1
+    iconcoords {108.0 256.0}
+    labelcoords {108.0 288.0}
+    interface-peer {eth0 n10}
+    services {IPForward UserDefined}
+    interface-peer {eth1 n15}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 192.169.5.131/26', 'ifconfig eth1 192.169.5.129/26', )
+	}
+    }
+}
+
+node n15 {
+    type wlan
+    network-config {
+	hostname wlan15
+	!
+	interface wireless
+	 ip address 10.0.11.0/32
+	 ipv6 address 2001:11::0/128
+	!
+	mobmodel
+	coreapi
+	basic_range
+	!
+    }
+    custom-config {
+	custom-config-id basic_range
+	custom-command {3 3 9 9 9}
+	config {
+	range=275
+	bandwidth=54000000
+	jitter=0
+	delay=20000
+	error=0
+	}
+    }
+    canvas c1
+    iconcoords {66.0 419.0}
+    labelcoords {66.0 451.0}
+    interface-peer {e0 n14}
+    interface-peer {e1 n29}
+    interface-peer {e2 n28}
+}
+
+node n1 {
+    type router
+    model PC
+    network-config {
+	hostname PC1
+	!
+	interface eth0
+	 ip address 192.169.5.2/25
+	!
+    }
+    canvas c1
+    iconcoords {709.0 652.0}
+    labelcoords {709.0 684.0}
+    interface-peer {eth0 n12}
+}
+
+node n2 {
+    type router
+    model PC
+    network-config {
+	hostname PC2
+	!
+	interface eth0
+	 ip address 192.169.5.3/25
+	!
+    }
+    canvas c1
+    iconcoords {661.0 708.0}
+    labelcoords {661.0 740.0}
+    interface-peer {eth0 n12}
+}
+
+node n16 {
+    type router
+    model router
+    network-config {
+	hostname ISP
+	!
+	interface eth2
+	 ip address 201.9.0.1/24
+	!
+	interface eth1
+	 ip address 201.7.0.1/24
+	!
+	interface eth0
+	 ip address 201.6.0.1/24
+	!
+    }
+    canvas c1
+    iconcoords {816.0 233.0}
+    labelcoords {816.0 265.0}
+    services {IPForward UserDefined}
+    interface-peer {eth0 n3}
+    interface-peer {eth1 n17}
+    interface-peer {eth2 n18}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 201.6.0.1/24', 'ifconfig eth1 201.7.0.1/24', 'ifconfig eth2 201.9.0.1/24', )
+	}
+    }
+}
+
+node n17 {
+    type router
+    model router
+    network-config {
+	hostname ISP
+	!
+	interface eth2
+	 ip address 201.10.0.1/24
+	!
+	interface eth0
+	 ip address 201.8.0.2/24
+	!
+	interface eth1
+	 ip address 201.7.0.2/24
+	!
+    }
+    canvas c1
+    iconcoords {800.0 403.0}
+    labelcoords {800.0 435.0}
+    services {IPForward UserDefined}
+    interface-peer {eth0 n3}
+    interface-peer {eth1 n16}
+    interface-peer {eth2 n20}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 201.8.0.2/24', 'ifconfig eth1 201.7.0.2/24', 'ifconfig eth2 201.10.0.1/24', )
+	}
+    }
+}
+
+node n18 {
+    type router
+    model router
+    network-config {
+	hostname Router-Casa
+	!
+	interface eth1
+	 ip address 201.9.0.3/24
+	!
+	interface eth0
+	 ip address 201.9.0.0/24
+	!
+    }
+    canvas c1
+    iconcoords {768.0 125.0}
+    labelcoords {768.0 157.0}
+    interface-peer {eth0 n16}
+    services {IPForward UserDefined}
+    interface-peer {eth1 n19}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 201.9.0.0/24', 'ifconfig eth1 201.9.0.3/24', )
+	}
+    }
+}
+
+node n19 {
+    type router
+    model PC
+    network-config {
+	hostname Pc-Casa
+	!
+	interface eth0
+	 ip address 201.9.0.2/24
+	!
+    }
+    canvas c1
+    iconcoords {655.0 58.0}
+    labelcoords {655.0 90.0}
+    interface-peer {eth0 n18}
+}
+
+node n20 {
+    type router
+    model router
+    network-config {
+	hostname Router-Bar
+	!
+	interface eth1
+	 ip address 201.10.0.2/24
+	!
+	interface eth0
+	 ip address 201.10.0.0/24
+	!
+    }
+    canvas c1
+    iconcoords {761.0 530.0}
+    labelcoords {761.0 562.0}
+    interface-peer {eth0 n17}
+    services {IPForward UserDefined}
+    interface-peer {eth1 n21}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 201.10.0.0/24', 'ifconfig eth1 201.10.0.2/24', )
+	}
+    }
+}
+
+node n21 {
+    type router
+    model router
+    network-config {
+	hostname Wifi-Publico
+	!
+	interface eth1
+	 ip address 192.168.1.0/24
+	!
+	interface eth0
+	 ip address 201.10.0.3/24
+	!
+    }
+    canvas c1
+    iconcoords {898.0 602.0}
+    labelcoords {898.0 634.0}
+    interface-peer {eth0 n20}
+    interface-peer {eth1 n22}
+    services {IPForward UserDefined}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	cmdup=('ifconfig eth0 201.10.0.3/24', 'ifconfig eth1 192.168.1.0/24', )
+	}
+    }
+}
+
+node n22 {
+    type wlan
+    network-config {
+	hostname wlan22
+	!
+	interface wireless
+	 ip address 10.0.1.0/32
+	 ipv6 address 2001:1::0/128
+	!
+	mobmodel
+	coreapi
+	basic_range
+	!
+    }
+    custom-config {
+	custom-config-id basic_range
+	custom-command {3 3 9 9 9}
+	config {
+	range=275
+	bandwidth=54000000
+	jitter=0
+	delay=20000
+	error=0
+	}
+    }
+    canvas c1
+    iconcoords {882.0 677.0}
+    labelcoords {882.0 709.0}
+    interface-peer {e0 n21}
+}
+
+node n23 {
+    type router
+    model PC
+    network-config {
+	hostname PC3
+	!
+	interface eth0
+	 ip address 192.169.5.4/25
+	!
+    }
+    canvas c1
+    iconcoords {683.0 578.0}
+    labelcoords {683.0 610.0}
+    interface-peer {eth0 n12}
+}
+
+node n24 {
+    type router
+    model PC
+    network-config {
+	hostname PC1
+	!
+	interface eth0
+	 ip address 192.169.5.226/29
+	!
+    }
+    canvas c1
+    iconcoords {240.0 168.0}
+    labelcoords {236.0 204.0}
+    interface-peer {eth0 n9}
+}
+
+node n25 {
+    type router
+    model PC
+    network-config {
+	hostname PC2
+	!
+	interface eth0
+	 ip address 192.169.5.227/29
+	!
+    }
+    canvas c1
+    iconcoords {373.0 131.0}
+    labelcoords {373.0 163.0}
+    interface-peer {eth0 n9}
+}
+
+node n26 {
+    type router
+    model PC
+    network-config {
+	hostname PC1
+	!
+	interface eth0
+	 ip address 192.169.5.194/27
+	!
+    }
+    canvas c1
+    iconcoords {437.0 180.0}
+    labelcoords {437.0 212.0}
+    interface-peer {eth0 n8}
+}
+
+node n27 {
+    type router
+    model PC
+    network-config {
+	hostname PC2
+	!
+	interface eth0
+	 ip address 192.169.5.195/27
+	!
+    }
+    canvas c1
+    iconcoords {595.0 161.0}
+    labelcoords {595.0 193.0}
+    interface-peer {eth0 n8}
+}
+
+node n28 {
+    type router
+    model PC
+    network-config {
+	hostname PC1
+	!
+	interface eth0
+	 ip address 192.169.5.132/26
+	!
+    }
+    canvas c1
+    iconcoords {39.0 344.0}
+    labelcoords {44.0 371.0}
+    interface-peer {eth0 n15}
+}
+
+node n29 {
+    type router
+    model PC
+    network-config {
+	hostname PC2
+	!
+	interface eth0
+	 ip address 192.169.5.133/26
+	!
+    }
+    canvas c1
+    iconcoords {76.0 491.0}
+    labelcoords {76.0 523.0}
+    interface-peer {eth0 n15}
+}
+
+link l4 {
+    nodes {n3 n4}
+    bandwidth 0
+}
+
+link l5 {
+    nodes {n4 n5}
+    bandwidth 0
+}
+
+link l6 {
+    nodes {n5 n6}
+    bandwidth 0
+}
+
+link l7 {
+    nodes {n5 n7}
+    bandwidth 0
+}
+
+link l8 {
+    nodes {n6 n9}
+    bandwidth 0
+}
+
+link l9 {
+    nodes {n6 n8}
+    bandwidth 0
+}
+
+link l10 {
+    nodes {n6 n10}
+    bandwidth 0
+}
+
+link l11 {
+    nodes {n10 n11}
+    bandwidth 0
+}
+
+link l12 {
+    nodes {n7 n11}
+    bandwidth 0
+}
+
+link l13 {
+    nodes {n7 n12}
+    bandwidth 0
+}
+
+link l14 {
+    nodes {n11 n13}
+    bandwidth 0
+}
+
+link l15 {
+    nodes {n10 n14}
+    bandwidth 0
+}
+
+link l16 {
+    nodes {n15 n14}
+}
+
+link l1 {
+    nodes {n12 n1}
+    bandwidth 0
+}
+
+link l2 {
+    nodes {n2 n12}
+    bandwidth 0
+}
+
+link l3 {
+    nodes {n3 n16}
+    bandwidth 0
+}
+
+link l17 {
+    nodes {n3 n17}
+    bandwidth 0
+}
+
+link l18 {
+    nodes {n17 n16}
+    bandwidth 0
+}
+
+link l19 {
+    nodes {n16 n18}
+    bandwidth 0
+}
+
+link l20 {
+    nodes {n18 n19}
+    bandwidth 0
+}
+
+link l21 {
+    nodes {n20 n17}
+    bandwidth 0
+}
+
+link l22 {
+    nodes {n20 n21}
+    bandwidth 0
+}
+
+link l23 {
+    nodes {n22 n21}
+}
+
+link l26 {
+    nodes {n9 n24}
+    bandwidth 0
+}
+
+link l27 {
+    nodes {n9 n25}
+    bandwidth 0
+}
+
+link l28 {
+    nodes {n8 n26}
+    bandwidth 0
+}
+
+link l29 {
+    nodes {n8 n27}
+    bandwidth 0
+}
+
+link l30 {
+    nodes {n12 n23}
+    bandwidth 0
+}
+
+link l24 {
+    nodes {n15 n29}
+}
+
+link l25 {
+    nodes {n15 n28}
+}
+
+canvas c1 {
+    name {Canvas1}
+}
+
+traffic {
+    {flow 1 from n1 to n2} 1 0.0 {} n1 n2 192.169.5.2 5000 {} 192.169.5.3 5000 /var/log/mgen1.log UDP {} {} {}
+                    {flow 2 from n3 to n5} 2 0.0 {} n3 n5 201.5.0.1 5000 {} {} 5000 /var/log/mgen2.log UDP {} {} {}
+}
+
+option global {
+    interface_names no
+    ip_addresses yes
+    ipv6_addresses yes
+    node_labels yes
+    link_labels yes
+    show_api no
+    background_images no
+    annotations yes
+    grid yes
+    traffic_start 1
+}
+
+option session {
+}
+
